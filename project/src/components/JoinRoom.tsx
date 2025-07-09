@@ -25,8 +25,8 @@ const JoinRoom: React.FC<JoinRoomProps> = ({ onNavigate, onJoinRoom }) => {
 
   const getApiUrl = () => {
     return window.location.hostname === 'localhost' 
-      ? 'http://localhost:3001' 
-      : window.location.origin;
+        ? 'http://localhost:3001'
+    : 'https://jumble-backend.onrender.com';
   };
 
   const fetchPublicRooms = React.useCallback(async () => {
