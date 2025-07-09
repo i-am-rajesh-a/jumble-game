@@ -89,18 +89,24 @@ const GamePlay: React.FC<GamePlayProps> = ({ room, currentPlayer }) => {
     });
 
     socket.on('correct-guess', (data) => {
-      setFeedback({
-        type: 'correct',
-        message: `${data.playerName} guessed "${data.word}" correctly! (+${data.score} points${
-          data.position === 1 ? ' - 1st!' : data.position === 2 ? ' - 2nd!' : ` - ${data.position}th!`
-        })`
-      });
-      setStreak(data.streak || 0);
-      
       if (data.playerId === currentPlayer.id) {
+        // Show feedback only to the player who guessed correctly
+        setFeedback({
+          type: 'correct',
+          message: `You guessed "${data.word}" correctly! (+${data.score} points${
+            data.position === 1 ? ' - 1st!' : data.position === 2 ? ' - 2nd!' : ` - ${data.position}th!`
+          })`
+        });
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);
+      } else {
+        // Notify other players to keep trying
+        setFeedback({
+          type: 'info',
+          message: `${data.playerName} guessed correctly! Keep trying to find the unscrambled word!`
+        });
       }
+      setStreak(data.streak || 0);
     });
 
     socket.on('incorrect-guess', (incorrectGuess) => {
@@ -188,7 +194,7 @@ const GamePlay: React.FC<GamePlayProps> = ({ room, currentPlayer }) => {
       socket.off('round-winner');
       socket.off('error');
     };
-  }, [socket, room, currentPlayer.id]);
+  }, [socket, room, currentPlayer.id, currentPlayer.name]);
 
   const submitWord = () => {
     if (wordToSubmit.trim() && socket && isMyTurn) {
