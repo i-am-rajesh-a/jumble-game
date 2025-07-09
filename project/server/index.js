@@ -13,7 +13,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:3000", "https://jumble-game-ldtlx4s6k-rajesh180206-gmailcoms-projects.vercel.app"],
+    origin: ["http://localhost:5173", "http://localhost:3000" ,"https://jumble-game-ten.vercel.app", "https://jumble-game-ldtlx4s6k-rajesh180206-gmailcoms-projects.vercel.app"],
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -21,7 +21,7 @@ const io = new Server(server, {
 
 // Middleware
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:3000", "https://jumble-game-ldtlx4s6k-rajesh180206-gmailcoms-projects.vercel.app"],
+  origin: ["http://localhost:5173", "http://localhost:3000", "https://jumble-game-ten.vercel.app","https://jumble-game-ldtlx4s6k-rajesh180206-gmailcoms-projects.vercel.app"],
   credentials: true
 }));
 app.use(express.json());
