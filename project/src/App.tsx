@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { SocketProvider, useSocket } from './contexts/SocketContext';
+import { SocketProvider } from './contexts/SocketContext';
+import { useContext } from 'react';
+import { SocketContext } from './contexts/SocketContext';
 import LandingPage from './components/LandingPage';
 import CreateRoom from './components/CreateRoom';
 import JoinRoom from './components/JoinRoom';
@@ -8,6 +10,7 @@ import GamePlay from './components/GamePlay';
 import GameResults from './components/GameResults';
 import { Room, Player, GameSettings, LeaderboardEntry } from './types/game';
 
+// Define the possible pages for navigation
 type Page = 'home' | 'createRoom' | 'joinRoom' | 'lobby' | 'game' | 'results' | 'quickPlay';
 
 function AppContent() {
@@ -15,7 +18,7 @@ function AppContent() {
   const [room, setRoom] = useState<Room | null>(null);
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
-  const { socket, isConnected } = useSocket();
+  const { socket, isConnected } = useContext(SocketContext);
 
   useEffect(() => {
     if (!socket) return;
